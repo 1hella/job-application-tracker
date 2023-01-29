@@ -1,0 +1,29 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+javafx {
+    version = "19"
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+mainClassName = 'com.wanhella.MainApp'
+
+def configFile = new File("config.properties")
+def configProperties = new Properties()
+configProperties.load(new FileInputStream(configFile))
+
+def dbPassword = configProperties.getProperty("DB_PASSWORD")
+
+run {
+    systemProperties System.getProperties()
+    systemProperties.put("DB_PASSWORD", dbPassword)
+}
