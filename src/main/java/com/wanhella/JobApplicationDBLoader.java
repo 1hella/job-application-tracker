@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JobApplicationDBLoader {
-    private static final String URL = "jdbc:postgresql://localhost:5432";
+    private static final String URL = "jdbc:postgresql://localhost:5432/job_applications";
 
-    private static final String DB_NAME = "job_applications";
+    private static final String TABLE_NAME = "job_applications";
     private static final String USER = "postgres";
     private static final String PASSWORD = System.getProperty("DB_PASSWORD");
 
@@ -19,19 +19,32 @@ public class JobApplicationDBLoader {
                         id SERIAL PRIMARY KEY,
                         company_name TEXT NOT NULL,
                         position_title TEXT NOT NULL,
-                        website_link TEXT NOT NULL,
-                        address TEXT NOT NULL,
-                        contact_name TEXT NOT NULL,
-                        phone_number TEXT NOT NULL,
-                        job_pay NUMERIC(10, 2) NOT NULL,
+                        website_link TEXT,
+                        address TEXT,
+                        contact_name TEXT,
+                        phone_number TEXT,
+                        job_pay NUMERIC(10, 2),
                         date_applied DATE NOT NULL,
                         interview1_date DATE,
                         interview2_date DATE,
                         interview3_date DATE,
-                        notes TEXT,
-                    );""".formatted(DB_NAME));
-            statement.executeQuery();
-            System.out.println("Created Table");
+                        notes TEXT
+                    );""".formatted(TABLE_NAME));
+            statement.execute();
+
+            PreparedStatement statement1 = connection.prepareStatement("SELECT * FROM " + TABLE_NAME);
+            ResultSet resultSet = statement1.executeQuery();
+
+            if (!resultSet.next()) { // no sample data or any rows
+                PreparedStatement statement2 = connection.prepareStatement("""
+                    INSERT INTO job_applications (company_name, position_title, website_link, address, contact_name, phone_number, job_pay, date_applied, interview1_date, interview2_date, interview3_date, notes)
+                    VALUES
+                    ('Google', 'Software Engineer', 'www.google.com', '1600 Amphitheatre Parkway, Mountain View, CA 94043, USA', 'John Doe', '123-456-7890', 100000.00, '2022-01-01', '2022-02-01', '2022-03-01', '2022-04-01', 'Good company'),
+                    ('Amazon', 'DevOps Engineer', 'www.amazon.com', '410 Terry Ave N, Seattle, WA 98109, USA', 'Jane Doe', '987-654-3210', 120000.00, '2022-05-01', '2022-06-01', '2022-07-01', NULL, 'Good opportunity'),
+                    ('Microsoft', 'Data Scientist', 'www.microsoft.com', 'One Microsoft Way, Redmond, WA 98052, USA', 'Jim Smith', '456-123-7890', 110000.00, '2022-08-01', '2022-09-01', NULL, NULL, 'Interesting projects');                  
+                    """);
+                statement2.execute();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -53,9 +66,16 @@ public class JobApplicationDBLoader {
                 String phoneNumber = resultSet.getString("phone_number");
                 double jobPay = resultSet.getDouble("job_pay");
                 LocalDate dateApplied = resultSet.getDate("date_applied").toLocalDate();
-                LocalDate interview1Date = resultSet.getDate("interview1_date").toLocalDate();
-                LocalDate interview2Date = resultSet.getDate("interview2_date").toLocalDate();
-                LocalDate interview3Date = resultSet.getDate("interview3_date").toLocalDate();
+
+                Date interview1DateTemp = resultSet.getDate("interview1_date");
+                LocalDate interview1Date = interview1DateTemp != null ? interview1DateTemp.toLocalDate() : null;
+
+                Date interview2DateTemp = resultSet.getDate("interview2_date");
+                LocalDate interview2Date = interview2DateTemp != null ? interview2DateTemp.toLocalDate() : null;
+
+                Date interview3DateTemp = resultSet.getDate("interview3_date");
+                LocalDate interview3Date = interview3DateTemp != null ? interview3DateTemp.toLocalDate() : null;
+
                 String notes = resultSet.getString("notes");
 
                 JobApplication jobApplication = new JobApplication(companyName, positionTitle, websiteLink, address, contactName, phoneNumber, jobPay, dateApplied, interview1Date, interview2Date, interview3Date, notes);

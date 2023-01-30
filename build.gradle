@@ -8,6 +8,9 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.1'
+
 }
 
 javafx {
