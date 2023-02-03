@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7e6fcf9-6094-4fd7-bc10-29ba3db75dcd" name="Changes" comment="initial commit. wip: tableview, JobApplication, and DB loader.">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="b7e6fcf9-6094-4fd7-bc10-29ba3db75dcd" name="Changes" comment="Add add and remove buttons. Implement remove button. Implemented remove method in db loader class.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wanhella/FXMLController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wanhella/FXMLController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wanhella/JobApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wanhella/JobApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/wanhella/JobApplicationDBLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wanhella/JobApplicationDBLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wanhella/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wanhella/MainApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/wanhella/scene.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/wanhella/scene.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/wanhella/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/wanhella/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,6 +251,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit. wip: tableview, JobApplication, and DB loader." />
-    <option name="LAST_COMMIT_MESSAGE" value="initial commit. wip: tableview, JobApplication, and DB loader." />
+    <MESSAGE value="Add add and remove buttons. Implement remove button. Implemented remove method in db loader class." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add add and remove buttons. Implement remove button. Implemented remove method in db loader class." />
   </component>
 </project>

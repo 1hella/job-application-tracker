@@ -3,6 +3,7 @@ package com.wanhella;
 import java.time.LocalDate;
 
 public class JobApplication {
+    public static final long NO_ID = 0;
     private String companyName;
     private String positionTitle;
     private String websiteLink;
@@ -16,7 +17,14 @@ public class JobApplication {
     private LocalDate interview3Date;
     private String notes;
 
+    // id = 0 when no id is set
+    private long id;
+
     public JobApplication(String companyName, String positionTitle, String websiteLink, String address, String contactName, String phoneNumber, double jobPay, LocalDate dateApplied, LocalDate interview1Date, LocalDate interview2Date, LocalDate interview3Date, String notes) {
+        this(companyName, positionTitle, websiteLink, address, contactName, phoneNumber, jobPay, dateApplied, interview1Date, interview2Date, interview3Date, notes, NO_ID);
+    }
+
+    public JobApplication(String companyName, String positionTitle, String websiteLink, String address, String contactName, String phoneNumber, double jobPay, LocalDate dateApplied, LocalDate interview1Date, LocalDate interview2Date, LocalDate interview3Date, String notes, long id) {
         this.companyName = companyName;
         this.positionTitle = positionTitle;
         this.websiteLink = websiteLink;
@@ -29,6 +37,7 @@ public class JobApplication {
         this.interview2Date = interview2Date;
         this.interview3Date = interview3Date;
         this.notes = notes;
+        this.id = id;
     }
 
     public long getDaysSinceApplying() {
@@ -144,4 +153,11 @@ public class JobApplication {
         this.notes = notes;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

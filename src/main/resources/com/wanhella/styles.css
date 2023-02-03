@@ -1,3 +1,18 @@
 .label {
     -fx-text-fill: blue;
 }
+.button {
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-border-width: 2px;
+}
+
+#addButton {
+    -fx-text-fill: green;
+}
+
+#deleteButton {
+    -fx-text-fill: red;
+}

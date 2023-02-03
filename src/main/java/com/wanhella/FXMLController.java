@@ -1,23 +1,19 @@
 package com.wanhella;
 
-import java.net.URL;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.ResourceBundle;
-
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class FXMLController implements Initializable {
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
 
-    @FXML
-    private Label label;
+public class FXMLController implements Initializable {
 
     @FXML
     private TableView<JobApplication> tableView;
@@ -55,13 +51,19 @@ public class FXMLController implements Initializable {
     @FXML
     private TableColumn<JobApplication, Integer> daysSinceInterview3Column;
 
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private Button deleteButton;
+
+    private JobApplication selectedApplication;
+    private ObservableList<JobApplication> jobApplications;
+    private JobApplicationDBLoader jobApplicationDBLoader;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        String javaVersion = System.getProperty("java.version");
-        String javafxVersion = System.getProperty("javafx.version");
-        label.setText("Hello, JavaFX " + javafxVersion + "\nRunning on Java " + javaVersion + ".");
-
         companyNameColumn.setCellValueFactory(new PropertyValueFactory<>("companyName"));
         positionTitleColumn.setCellValueFactory(new PropertyValueFactory<>("positionTitle"));
         websiteLinkColumn.setCellValueFactory(new PropertyValueFactory<>("websiteLink"));
@@ -79,8 +81,25 @@ public class FXMLController implements Initializable {
         daysSinceInterview2Column.setCellValueFactory(new PropertyValueFactory<>("daysSinceInterview2"));
         daysSinceInterview3Column.setCellValueFactory(new PropertyValueFactory<>("daysSinceInterview3"));
 
-        JobApplicationDBLoader jobApplicationDBLoader = new JobApplicationDBLoader();
-        List<JobApplication> jobApplications = jobApplicationDBLoader.loadJobApplications();
-        tableView.setItems(FXCollections.observableArrayList(jobApplications));
+        jobApplicationDBLoader = new JobApplicationDBLoader();
+        jobApplications = FXCollections.observableArrayList(jobApplicationDBLoader.loadJobApplications());
+        tableView.setItems(jobApplications);
+
+        tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectedApplication = newSelection;
+            }
+        });
+
+        deleteButton.setOnAction(event -> {
+            if (selectedApplication != null) {
+                jobApplicationDBLoader.deleteJobApplication(selectedApplication);
+                jobApplications.setAll(jobApplicationDBLoader.loadJobApplications());
+            }
+        });
+
+        addButton.setOnAction(event -> {
+            System.out.println("Add button clicked!");
+        });
     }
 }

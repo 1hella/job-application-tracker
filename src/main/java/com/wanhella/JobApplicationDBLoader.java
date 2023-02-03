@@ -2,6 +2,7 @@ package com.wanhella;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,12 +38,12 @@ public class JobApplicationDBLoader {
 
             if (!resultSet.next()) { // no sample data or any rows
                 PreparedStatement statement2 = connection.prepareStatement("""
-                    INSERT INTO job_applications (company_name, position_title, website_link, address, contact_name, phone_number, job_pay, date_applied, interview1_date, interview2_date, interview3_date, notes)
-                    VALUES
-                    ('Google', 'Software Engineer', 'www.google.com', '1600 Amphitheatre Parkway, Mountain View, CA 94043, USA', 'John Doe', '123-456-7890', 100000.00, '2022-01-01', '2022-02-01', '2022-03-01', '2022-04-01', 'Good company'),
-                    ('Amazon', 'DevOps Engineer', 'www.amazon.com', '410 Terry Ave N, Seattle, WA 98109, USA', 'Jane Doe', '987-654-3210', 120000.00, '2022-05-01', '2022-06-01', '2022-07-01', NULL, 'Good opportunity'),
-                    ('Microsoft', 'Data Scientist', 'www.microsoft.com', 'One Microsoft Way, Redmond, WA 98052, USA', 'Jim Smith', '456-123-7890', 110000.00, '2022-08-01', '2022-09-01', NULL, NULL, 'Interesting projects');                  
-                    """);
+                        INSERT INTO job_applications (company_name, position_title, website_link, address, contact_name, phone_number, job_pay, date_applied, interview1_date, interview2_date, interview3_date, notes)
+                        VALUES
+                        ('Google', 'Software Engineer', 'www.google.com', '1600 Amphitheatre Parkway, Mountain View, CA 94043, USA', 'John Doe', '123-456-7890', 100000.00, '2022-01-01', '2022-02-01', '2022-03-01', '2022-04-01', 'Good company'),
+                        ('Amazon', 'DevOps Engineer', 'www.amazon.com', '410 Terry Ave N, Seattle, WA 98109, USA', 'Jane Doe', '987-654-3210', 120000.00, '2022-05-01', '2022-06-01', '2022-07-01', NULL, 'Good opportunity'),
+                        ('Microsoft', 'Data Scientist', 'www.microsoft.com', 'One Microsoft Way, Redmond, WA 98052, USA', 'Jim Smith', '456-123-7890', 110000.00, '2022-08-01', '2022-09-01', NULL, NULL, 'Interesting projects');
+                        """);
                 statement2.execute();
             }
         } catch (SQLException e) {
@@ -77,8 +78,9 @@ public class JobApplicationDBLoader {
                 LocalDate interview3Date = interview3DateTemp != null ? interview3DateTemp.toLocalDate() : null;
 
                 String notes = resultSet.getString("notes");
+                long id = resultSet.getLong("id");
 
-                JobApplication jobApplication = new JobApplication(companyName, positionTitle, websiteLink, address, contactName, phoneNumber, jobPay, dateApplied, interview1Date, interview2Date, interview3Date, notes);
+                JobApplication jobApplication = new JobApplication(companyName, positionTitle, websiteLink, address, contactName, phoneNumber, jobPay, dateApplied, interview1Date, interview2Date, interview3Date, notes, id);
                 jobApplications.add(jobApplication);
             }
 
@@ -89,8 +91,34 @@ public class JobApplicationDBLoader {
         return jobApplications;
     }
 
-    public void updateJobApplication(JobApplication jobApplication) {
+    public void deleteJobApplication(JobApplication jobApplication) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            // untested
+            if (jobApplication.getId() == JobApplication.NO_ID) {
+                PreparedStatement statement = connection.prepareStatement("""
+                          SELECT * FROM %s WHERE company_name = %s
+                          && position_title = %s
+                          && date_applied = %s
+                        """.formatted(TABLE_NAME, jobApplication.getCompanyName(), jobApplication.getPositionTitle(),
+                        jobApplication.getDateApplied().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+                ResultSet result = statement.executeQuery();
+                if (result.next()) {
+                    jobApplication.setId(result.getLong("id"));
+                } else {
+                    System.out.println("No matching job application");
+                    return;
+                }
+            }
 
+            PreparedStatement statement = connection.prepareStatement("""
+                    DELETE FROM %s
+                    WHERE id = %d
+                    """.formatted(TABLE_NAME, jobApplication.getId()));
+            statement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     //create

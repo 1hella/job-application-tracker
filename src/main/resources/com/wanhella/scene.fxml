@@ -1,36 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <!--TODO: add delete-->
 <!--TODO: add edit-->
 <!--TODO: add add-->
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.wanhella.FXMLController">
-    <children>
-        <Label fx:id="label" text="Label" />
-        <TableView  fx:id="tableView">
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="${tableView.prefWidth}"
+            xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="com.wanhella.FXMLController">
+    <top>
+        <ToolBar>
+            <items>
+                <Button fx:id="addButton" mnemonicParsing="false" text="+"/>
+                <Button fx:id="deleteButton" mnemonicParsing="false" text="x"/>
+            </items>
+        </ToolBar>
+    </top>
+    <center>
+        <TableView fx:id="tableView" BorderPane.alignment="CENTER">
             <columns>
-                <TableColumn fx:id="companyNameColumn" text="Company Name"><cellValueFactory><PropertyValueFactory property="companyName" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="positionTitleColumn" text="Position Title"><cellValueFactory><PropertyValueFactory property="positionTitle" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="websiteLinkColumn" text="Website Link"><cellValueFactory><PropertyValueFactory property="websiteLink" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="addressColumn" text="Address"><cellValueFactory><PropertyValueFactory property="address" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="contactNameColumn" text="Contact Name"><cellValueFactory><PropertyValueFactory property="contactName" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="phoneNumberColumn" text="Phone Number"><cellValueFactory><PropertyValueFactory property="phoneNumber" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="jobPayColumn" text="Job Pay"><cellValueFactory><PropertyValueFactory property="jobPay" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="dateAppliedColumn" text="Date Applied"><cellValueFactory><PropertyValueFactory property="dateApplied" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="interview1DateColumn" text="Interview 1 Date"><cellValueFactory><PropertyValueFactory property="interview1Date" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="interview2DateColumn" text="Interview 2 Date"><cellValueFactory><PropertyValueFactory property="interview2Date" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="interview3DateColumn" text="Interview 3 Date"><cellValueFactory><PropertyValueFactory property="interview3Date" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="notesColumn" text="Notes"><cellValueFactory><PropertyValueFactory property="notes" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="daysSinceApplyingColumn" text="Days Since Applying"><cellValueFactory><PropertyValueFactory property="daysSinceApplying" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="daysSinceInterview1Column" text="Days Since Interview 1"><cellValueFactory><PropertyValueFactory property="daysSinceInterview1" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="daysSinceInterview2Column" text="Days Since Interview 2"><cellValueFactory><PropertyValueFactory property="daysSinceInterview2" /></cellValueFactory></TableColumn>
-                <TableColumn fx:id="daysSinceInterview3Column" text="Days Since Interview 3"><cellValueFactory><PropertyValueFactory property="daysSinceInterview3" /></cellValueFactory></TableColumn>
+                <TableColumn fx:id="companyNameColumn" text="Company Name">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="companyName"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="positionTitleColumn" text="Position Title">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="positionTitle"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="websiteLinkColumn" text="Website Link">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="websiteLink"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="addressColumn" text="Address">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="address"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="contactNameColumn" text="Contact Name">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="contactName"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="phoneNumberColumn" text="Phone Number">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="phoneNumber"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="jobPayColumn" text="Job Pay">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="jobPay"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="dateAppliedColumn" text="Date Applied">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="dateApplied"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="interview1DateColumn" text="Interview 1 Date">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="interview1Date"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="interview2DateColumn" text="Interview 2 Date">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="interview2Date"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="interview3DateColumn" text="Interview 3 Date">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="interview3Date"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="notesColumn" text="Notes">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="notes"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="daysSinceApplyingColumn" text="Days Since Applying">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="daysSinceApplying"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="daysSinceInterview1Column" text="Days Since Interview 1">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="daysSinceInterview1"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="daysSinceInterview2Column" text="Days Since Interview 2">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="daysSinceInterview2"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="daysSinceInterview3Column" text="Days Since Interview 3">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="daysSinceInterview3"/>
+                    </cellValueFactory>
+                </TableColumn>
             </columns>
         </TableView>
-    </children>
-</StackPane>
+    </center>
+</BorderPane>
